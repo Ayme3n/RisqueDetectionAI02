@@ -1,2 +1,5 @@
-# RisqueDetectionAI02
-An intelligent, AI-driven tool designed to proactively identify and mitigate risks across various domains, leveraging advanced machine learning and natural language processing to detect anomalies, predict potential threats, and provide actionable insights.
+# Anomaly Detection Dashboard
+
+This project is a web-based dashboard for detecting anomalies in system logs using an unsupervised ensemble model ( wazuh logs edition ) .
+
+## 📂 Project Structure
