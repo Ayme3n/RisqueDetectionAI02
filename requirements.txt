@@ -1,7 +1,10 @@
-fastapi
-uvicorn
-scikit-learn
-pandas
 matplotlib
-joblib
 streamlit
+fastapi
+uvicorn[standard]
+pandas
+numpy
+scikit-learn
+joblib
+tensorflow
+python-multipart
