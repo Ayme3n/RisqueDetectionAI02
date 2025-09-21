@@ -2,9 +2,10 @@
 import joblib
 import json
 from pathlib import Path
-import pandas as pd
+from typing import Optional
+import tensorflow as tf
 
-# Models directory (relative to backend/app => backend/models)
+# models directory (backend/models)
 MODELS_DIR = Path(__file__).resolve().parent.parent / "models"
 
 def model_path(name: str) -> Path:
@@ -16,6 +17,13 @@ def load_joblib(name: str):
         raise FileNotFoundError(f"Joblib artifact not found: {path}")
     return joblib.load(path)
 
+def safe_load_joblib(name: str):
+    """Return loaded joblib object or None if file missing."""
+    path = model_path(name)
+    if not path.exists():
+        return None
+    return joblib.load(path)
+
 def load_json(name: str):
     path = model_path(name)
     if not path.exists():
@@ -23,14 +31,10 @@ def load_json(name: str):
     with open(path, "r") as f:
         return json.load(f)
 
-def save_csv(df: pd.DataFrame, name: str):
-    out = model_path(name)
-    df.to_csv(out, index=False)
-    return out
-
-def safe_load_optional_joblib(name: str):
-    """Load optional joblib artifact; return None if missing."""
+def load_tf_model(name: str):
+    """Load tensorflow saved model folder (returns None if missing)."""
     path = model_path(name)
     if not path.exists():
         return None
-    return joblib.load(path)
+    # tf.keras.models.load_model accepts folder path for SavedModel or .h5 file
+    return tf.keras.models.load_model(str(path))
